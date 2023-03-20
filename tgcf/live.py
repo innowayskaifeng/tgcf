@@ -48,6 +48,7 @@ async def new_message_handler(event: Union[Message, events.NewMessage]) -> None:
 
     st.stored[event_uid] = {}
     grouped_id = await client.send(functions.messages.CreateChatRequest(users=dest, title='grouped_id'))
+    logging.info(f"grouped_id")
     for d in dest:
         if event.is_reply and r_event_uid in st.stored:
             tm.reply_to = st.stored.get(r_event_uid).get(d)
@@ -58,6 +59,7 @@ async def new_message_handler(event: Union[Message, events.NewMessage]) -> None:
 
 async def edited_message_handler(event) -> None:
     """Handle message edits."""
+    logging.info(f"Handle message edits.")
     message = event.message
 
     chat_id = event.chat_id
@@ -94,6 +96,7 @@ async def edited_message_handler(event) -> None:
 
 async def deleted_message_handler(event):
     """Handle message deletes."""
+    logging.info(f"Handle message deletes.")
     chat_id = event.chat_id
     if chat_id not in config.from_to:
         return
